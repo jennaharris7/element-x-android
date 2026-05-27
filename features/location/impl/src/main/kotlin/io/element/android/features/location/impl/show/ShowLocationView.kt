@@ -100,6 +100,7 @@ fun ShowLocationView(
         }
     }
     MapBottomSheetScaffold(
+        customMapStyleUrl = state.customMapStyleUrl,
         sheetDragHandle = if (state.isSheetDraggable) {
             { BottomSheetDefaults.DragHandle() }
         } else {
@@ -147,6 +148,7 @@ fun ShowLocationView(
                         LocationShareRow(
                             item = locationShare,
                             onShareClick = { state.eventSink(ShowLocationEvent.Share(locationShare.location)) },
+                            onStopClick = { state.eventSink(ShowLocationEvent.StopLocationSharing) },
                             modifier = Modifier.clickable {
                                 state.eventSink(ShowLocationEvent.TrackMyLocation(false))
                                 val position = CameraPosition(

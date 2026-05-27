@@ -33,6 +33,7 @@ private val customElementCallBaseUrlKey = stringPreferencesKey("elementCallBaseU
 private val themeKey = stringPreferencesKey("theme")
 private val hideInviteAvatarsKey = booleanPreferencesKey("hideInviteAvatars")
 private val timelineMediaPreviewValueKey = stringPreferencesKey("timelineMediaPreviewValue")
+private val liveLocationMinimumDistanceUpdateKey = intPreferencesKey("liveLocationMinimumDistanceUpdate")
 private val logLevelKey = stringPreferencesKey("logLevel")
 private val traceLogPacksKey = stringPreferencesKey("traceLogPacks")
 private val messageSoundUriKey = stringPreferencesKey("notificationMessageSoundUri")
@@ -87,6 +88,18 @@ class DefaultAppPreferencesStore(
     override fun getThemeFlow(): Flow<String?> {
         return store.data.map { prefs ->
             prefs[themeKey]
+        }
+    }
+
+    override suspend fun setLiveLocationMinimumDistanceInMetersUpdate(value: Int) {
+        store.edit { prefs ->
+            prefs[liveLocationMinimumDistanceUpdateKey] = value
+        }
+    }
+
+    override fun getLiveLocationMinimumDistanceInMetersUpdateFlow(): Flow<Int> {
+        return store.data.map { prefs ->
+            prefs[liveLocationMinimumDistanceUpdateKey] ?: 10
         }
     }
 
